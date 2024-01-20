@@ -5,18 +5,24 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <input type="text" id="searchBar" placeholder="Search for fragrances..." onkeyup="searchFragrances()">
+
     <h1>Rate the Fragrances</h1>
     <form method="post">
-        {% for fragrance in fragrances %}
-            <label for="rating_{{ fragrance }}">{{ fragrance }}</label>
-            <div class="star-rating">
-                {% for i in range(5, 0, -1) %}
-                    <input type="radio" id="rating_{{ fragrance }}_{{ i }}" name="rating_{{ fragrance }}" value="{{ i }}" onclick="updateStars(this);">
-                    <label for="rating_{{ fragrance }}_{{ i }}">☆</label>
-                {% endfor %}
-            </div>
-            <br>
-        {% endfor %}
+        <div id="fragranceList">
+            {% for fragrance in fragrances %}
+                <div class="fragrance-item">
+                    <label for="rating_{{ fragrance }}">{{ fragrance }}</label>
+                    <div class="star-rating">
+                        {% for i in range(5, 0, -1) %}
+                            <input type="radio" id="rating_{{ fragrance }}_{{ i }}" name="rating_{{ fragrance }}" value="{{ i }}" onclick="updateStars(this);">
+                            <label for="rating_{{ fragrance }}_{{ i }}">☆</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
         <button type="submit">Submit</button>
     </form>
 
@@ -25,6 +31,24 @@
             let container = radio.parentElement;
             for (let star of container.children) {
                 star.textContent = star.htmlFor <= radio.id ? '★' : '☆';
+            }
+        }
+
+        function searchFragrances() {
+            let input = document.getElementById('searchBar');
+            let filter = input.value.toUpperCase();
+            let fragranceDivs = document.getElementsByClassName('fragrance-item');
+
+            for (let div of fragranceDivs) {
+                let label = div.getElementsByTagName('label')[0];
+                if (label) {
+                    let txtValue = label.textContent || label.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        div.style.display = "";
+                    } else {
+                        div.style.display = "none";
+                    }
+                }
             }
         }
     </script>
