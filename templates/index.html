@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fragrance Rating</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Rate the Fragrances</h1>
+    <form method="post">
+        {% for fragrance in fragrances %}
+            <label for="rating_{{ fragrance }}">{{ fragrance }}</label>
+            <div class="star-rating">
+                {% for i in range(5, 0, -1) %}
+                    <input type="radio" id="rating_{{ fragrance }}_{{ i }}" name="rating_{{ fragrance }}" value="{{ i }}" onclick="updateStars(this);">
+                    <label for="rating_{{ fragrance }}_{{ i }}">☆</label>
+                {% endfor %}
+            </div>
+            <br>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function updateStars(radio) {
+            let container = radio.parentElement;
+            for (let star of container.children) {
+                star.textContent = star.htmlFor <= radio.id ? '★' : '☆';
+            }
+        }
+    </script>
+</body>
+</html>

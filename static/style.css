@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 1000px;
+    border-radius: 8px;
+}
+
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+}
+
+.star-rating label {
+    color: #ccc;
+    font-size: 20px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating input:checked ~ label {
+    color: #f90;
+}
+
+.star-rating label:hover, .star-rating label:hover ~ label {
+    color: #fc0;
+}
